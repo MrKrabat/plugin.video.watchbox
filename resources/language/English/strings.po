@@ -1,0 +1,52 @@
+# XBMC Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2013-07-17 09:48+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+
+# Watchbox Menue
+
+msgctxt "#30020"
+msgid "Genres"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Search"
+msgstr ""
+
+msgctxt "#30022"
+msgid "All"
+msgstr ""
+
+msgctxt "#30023"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#30024"
+msgid "TV Shows"
+msgstr ""
+
+msgctxt "#30025"
+msgid "Next page"
+msgstr ""
+
+
+# Watchbox Messages
+
+msgctxt "#30040"
+msgid "An error occurred"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Failed to play video or stream"
+msgstr ""

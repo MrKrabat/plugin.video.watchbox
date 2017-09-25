@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.watchbox" name="Watchbox" version="0.1.0" provider-name="MrKrabat">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<language>en de</language>
+		<summary lang="en_GB">Movies and series from the top genres | WATCHBOX</summary>
+		<summary lang="de_DE">Filme und Serien aus den Top Genres | WATCHBOX</summary>
+		<description lang="en_GB">Whether anime, horror, action or comedy! Browse through our top genres! All films and series for free as online stream at WATCHBOX.</description>
+		<description lang="de_DE">Ob Anime, Horror, Action oder Komödie! Stöber durch unsere Top Genres! Alle Filme und Serien kostenlos im Online-Stream bei WATCHBOX.</description>
+		<disclaimer lang="en">WARNING: This plugin is only available from Germany by geo blocking!</disclaimer>
+		<disclaimer lang="de">HINWEIS: Dieses Plugin ist durch Geoblocking nur von Deutschland aus verfügbar!</disclaimer>
+		<license>GNU Affero General Public License, v3</license>
+		<forum></forum>
+		<website>https://www.watchbox.de/</website>
+		<email></email>
+		<source>https://github.com/MrKrabat/plugin.video.watchbox</source>
+	</extension>
+</addon>
