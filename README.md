@@ -20,12 +20,10 @@ Compatibility
 | Android | 17.x  | Yes  |
 | RaspberryPi | 17.x  | Yes  |
 | iOS | 17.x  | untested  |
-
-Devices running an older Kodi version will only support videos you bought.
 ***
 
 What this plugin currently can do:
-- [x] Search for animes
+- [x] Search for movies / tv shows
 - [x] Show/browse all genres
 - [x] Show/browse all seasons
 - [x] Show/browse all episodes per season
@@ -35,3 +33,6 @@ What this plugin currently can do:
 
 _Kodi® (formerly known as XBMC™) is a registered trademark of the XBMC Foundation.
 This website and addon is not affiliated with Kodi, Team Kodi, or the XBMC Foundation._
+
+_Watchbox is a registered trademark of RTL interactive GmbH.
+This website and addon is not affiliated with Watchbox or RTL interactive GmbH._

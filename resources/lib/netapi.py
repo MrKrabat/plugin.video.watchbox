@@ -216,15 +216,27 @@ def search(args):
 	json_obj = json.loads(html)
 
 	for item in json_obj['items']:
-		list.add_item(args,
-						{'url':			'/serien/test-' + str(item['entityId']) + '/',
-						'title':		item['headline'].encode('utf-8'),
-						'mode':			'season_list',
-						'thumb':		'https://aiswatchbox-a.akamaihd.net/watchbox/format/' + str(item['entityId']) + '_dvdcover/600x840/test.jpg',
-						'fanart_image':	'https://aiswatchbox-a.akamaihd.net/watchbox/format/' + str(item['entityId']) + '_dvdcover/600x840/test.jpg',
-						'year':			str(item['productionYear']),
-						'plot':			item['description'].encode('utf-8')},
-						isFolder=True, mediatype="video")
+		if str(item['type']) == 'film':
+			list.add_item(args,
+							{'url':			'/serien/test-' + str(item['entityId']) + '/',
+							'title':		item['headline'].encode('utf-8'),
+							'mode':			'videoplay',
+							'thumb':		'https://aiswatchbox-a.akamaihd.net/watchbox/format/' + str(item['entityId']) + '_dvdcover/600x840/test.jpg',
+							'fanart_image':	'https://aiswatchbox-a.akamaihd.net/watchbox/format/' + str(item['entityId']) + '_dvdcover/600x840/test.jpg',
+							'year':			str(item['productionYear']),
+							'plot':			item['description'].encode('utf-8')},
+							isFolder=False, mediatype="video")
+
+		else:
+			list.add_item(args,
+							{'url':			'/serien/test-' + str(item['entityId']) + '/',
+							'title':		item['headline'].encode('utf-8'),
+							'mode':			'season_list',
+							'thumb':		'https://aiswatchbox-a.akamaihd.net/watchbox/format/' + str(item['entityId']) + '_dvdcover/600x840/test.jpg',
+							'fanart_image':	'https://aiswatchbox-a.akamaihd.net/watchbox/format/' + str(item['entityId']) + '_dvdcover/600x840/test.jpg',
+							'year':			str(item['productionYear']),
+							'plot':			item['description'].encode('utf-8')},
+							isFolder=True, mediatype="video")
 
 
 	list.endofdirectory()
