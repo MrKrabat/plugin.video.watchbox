@@ -44,17 +44,21 @@ def check_mode(args):
 		# call from other plugin
 		mode = 'videoplay'
 		args.name = 'Video'
-		args.episode, args.rating, args.plot, args.year, args.studio, args.icon = ('None',)*6
+		args.episode, args.rating, args.plot, args.icon = ('None',)*4
 
 		if hasattr(args,'id'):
-			args.url = '/de/v2/catalogue/episode/' + id
+			args.url = 'https://www.watchbox.de/serien/test-' + args.id + '/'
 		elif hasattr(args,'url'):
-			args.url = args.url[24:]
+			args.url = args.url[23:]
 		else:
 			mode = None
 
 	if mode is None:
 		showMainMenue(args)
+	elif mode == 'popular':
+		netapi.genre_view(3, args)
+	elif mode == 'new':
+		netapi.genre_view(4, args)
 	elif mode == 'genres':
 		netapi.genres_show(args)
 	elif mode == 'genre_list':
@@ -83,6 +87,12 @@ def check_mode(args):
 def showMainMenue(args):
 	"""Show main menu
 	"""
+	list.add_item(args,
+			{'title':	args._addon.getLocalizedString(30026),
+			'mode':		'popular'})
+	list.add_item(args,
+			{'title':	args._addon.getLocalizedString(30027),
+			'mode':		'new'})
 	list.add_item(args,
 			{'title':	args._addon.getLocalizedString(30020),
 			'mode':		'genres'})

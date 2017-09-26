@@ -31,8 +31,8 @@ What this plugin currently can do:
 - [x] Watch all movies / tv shows
 ***
 
-_Kodi® (formerly known as XBMC™) is a registered trademark of the XBMC Foundation.
-This website and addon is not affiliated with Kodi, Team Kodi, or the XBMC Foundation._
-
 _Watchbox is a registered trademark of RTL interactive GmbH.
 This website and addon is not affiliated with Watchbox or RTL interactive GmbH._
+
+_Kodi® (formerly known as XBMC™) is a registered trademark of the XBMC Foundation.
+This website and addon is not affiliated with Kodi, Team Kodi, or the XBMC Foundation._

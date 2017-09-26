@@ -84,6 +84,10 @@ def genre_view(mode, args):
 		response = urllib2.urlopen('https://www.watchbox.de' + args.url + 'filme/' + url)
 	elif mode == 2:
 		response = urllib2.urlopen('https://www.watchbox.de' + args.url + 'serien/' + url)
+	elif mode == 3:
+		response = urllib2.urlopen('https://www.watchbox.de/beste/' + url)
+	elif mode == 4:
+		response = urllib2.urlopen('https://www.watchbox.de/neu/' + url)
 	else:
 		response = urllib2.urlopen('https://www.watchbox.de' + args.url + 'beste/' + url)
 
