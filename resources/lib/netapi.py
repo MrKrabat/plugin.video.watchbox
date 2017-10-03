@@ -210,10 +210,10 @@ def search(args):
 	"""Search function
 	"""
 	d = xbmcgui.Dialog().input(args._addon.getLocalizedString(30021), type=xbmcgui.INPUT_ALPHANUM)
-	if not d:
+	if not d or len(d) < 2:
 		return
 
-	response = urllib2.urlopen('https://api.watchbox.de/v1/search/?page=1&maxPerPage=28&active=true&term=' + d)
+	response = urllib2.urlopen('https://api.watchbox.de/v1/search/?page=1&maxPerPage=28&active=true&term=' + urllib.quote_plus(d))
 	html = response.read()
 
 	# parse json
