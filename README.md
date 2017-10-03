@@ -1,11 +1,10 @@
 # Watchbox plugin for Kodi
 
-Watchbox
-A KODI (XBMC) plugin for Watchbox.
+Watchbox a KODI (XBMC) plugin for Watchbox.de.
 
-Git Repo: https://github.com/MrKrabat/plugin.video.watchbox
+Git repo: https://github.com/MrKrabat/plugin.video.watchbox
 
-Forum Posting: --
+Forum posting: https://www.kodinerds.net/index.php/Thread/58398-Release-Watchbox-de/
 
 **WARNING: This plugin is only available from Germany by geo blocking**
 ***
