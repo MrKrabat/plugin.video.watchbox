@@ -1,2 +1,6 @@
+2017.10.03 v0.2.0
++ Added popular and new category
++ Added login with watchlist
+
 2017.09.25 v0.1.0
 + Initial BETA release
