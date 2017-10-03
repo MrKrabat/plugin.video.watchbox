@@ -50,6 +50,7 @@ class Args(object):
 		self._addonname = sys.modules['__main__'].__plugin__
 		self._addonid    = sys.modules['__main__']._plugId
 		self._cj    = None
+		self._login = False
 
 		for key, value in kwargs.iteritems():
 			if value == 'None':

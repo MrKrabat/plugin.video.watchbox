@@ -24,6 +24,7 @@ from bs4 import BeautifulSoup
 import xbmc
 import xbmcgui
 
+import login
 import list
 
 
@@ -131,6 +132,45 @@ def genre_view(mode, args):
 				'genre':	args.genre,
 				'offset':	str(int(args.offset) + 1),
 				'mode':		args.mode})
+
+	list.endofdirectory()
+
+
+def mylist(args):
+	"""Show my list
+	"""
+	response = urllib2.urlopen('https://www.watchbox.de/meine-liste')
+	html = response.read()
+
+	soup = BeautifulSoup(html, 'html.parser')
+	div = soup.find("div", {"class": "grid"})
+
+	for item in div.find_all('section'):
+		thumb = item.img['src'].replace(" ", "%20")
+		if thumb[:4] != "http":
+			thumb = "https:" + thumb
+
+		if '.html' in item.a['href']:
+			list.add_item(args,
+							{'url':			item.a['href'],
+							'title':		item.find("div", {"class": "text_teaser-portrait-title"}).string.strip().encode('utf-8'),
+							'thumb':		thumb,
+							'fanart_image':	thumb,
+							'genre':		args.genre,
+							'mode':			'videoplay',
+							'plot':			item.find("div", {"class": "text_teaser-portrait-description"}).string.strip().encode('utf-8')},
+							isFolder=False, mediatype="video")
+		else:
+			list.add_item(args,
+							{'url':			item.a['href'],
+							'title':		item.find("div", {"class": "text_teaser-portrait-title"}).string.strip().encode('utf-8'),
+							'thumb':		thumb,
+							'fanart_image':	thumb,
+							'genre':		args.genre,
+							'mode':			'season_list',
+							'plot':			item.find("div", {"class": "text_teaser-portrait-description"}).string.strip().encode('utf-8')},
+							isFolder=True, mediatype="video")
+
 
 	list.endofdirectory()
 
@@ -259,13 +299,13 @@ def startplayback(args):
 
 	if matches:
 		# play stream
-		item = xbmcgui.ListItem(args.name, path=matches)
+		item = xbmcgui.ListItem(args.name, path=matches + login.getCookie(args))
 		item.setInfo(type="Video", infoLabels={"Title":       args.name,
 												"TVShowTitle": args.name,
 												"episode":		args.episode,
 												"plot":			args.plot})
 		item.setThumbnailImage(args.icon)
-		xbmc.Player().play(matches, item)
+		xbmc.Player().play(matches + login.getCookie(args), item)
 	else:
 		xbmc.log("[PLUGIN] %s: Failed to play stream" % args._addonname, xbmc.LOGERROR)
 		xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30044))

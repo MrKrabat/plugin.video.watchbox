@@ -14,6 +14,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 
+# Watchbox Settings
+
+msgctxt "#30001"
+msgid "Username"
+msgstr "Benutzername"
+
+msgctxt "#30002"
+msgid "Password"
+msgstr "Passwort"
+
+
 # Watchbox Menue
 
 msgctxt "#30020"
@@ -48,6 +59,14 @@ msgctxt "#30027"
 msgid "New on Watchbox"
 msgstr "Neu auf Watchbox"
 
+msgctxt "#30028"
+msgid "My list"
+msgstr "Meine Liste"
+
+msgctxt "#30029"
+msgid "Login"
+msgstr "Einloggen"
+
 
 # Watchbox Messages
 
@@ -58,3 +77,7 @@ msgstr "Ein Fehler ist aufgetreten"
 msgctxt "#30041"
 msgid "Failed to play video or stream"
 msgstr "Fehlgeschlagen das Video oder den Stream abzuspielen"
+
+msgctxt "#30042"
+msgid "Login failed"
+msgstr "Login fehlgeschlagen"

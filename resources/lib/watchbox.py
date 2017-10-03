@@ -22,6 +22,7 @@ import xbmcgui
 import xbmcplugin
 
 import cmdargs
+import login
 import netapi
 import list
 
@@ -31,8 +32,28 @@ def main():
 	"""
 	args = cmdargs.parse_args()
 
-	xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-	check_mode(args)
+	# check if account is set
+	username = args._addon.getSetting("watchbox_username")
+	password = args._addon.getSetting("watchbox_password")
+
+	if username == "" or password == "":
+		xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+		check_mode(args)
+	else:
+		# login
+		success = login.login(username, password, args)
+		if success==True:
+			# list menue
+			args._login = True
+			xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+			check_mode(args)
+		else:
+			# login failed
+			xbmc.log("[PLUGIN] %s: Login failed" % args._addonname, xbmc.LOGERROR)
+			xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30042))
+
+			xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+			check_mode(args)
 
 
 def check_mode(args):
@@ -77,6 +98,14 @@ def check_mode(args):
 		netapi.search(args)
 	elif mode == 'videoplay':
 		netapi.startplayback(args)
+	elif mode == 'login' and not args._login:
+		# open addon settings
+		args._addon.openSettings()
+		return False
+	elif mode == 'login' and args._login:
+		showMainMenue(args)
+	elif mode == 'mylist' and args._login:
+		netapi.mylist(args)
 	else:
 		# unkown mode
 		xbmc.log("[PLUGIN] %s: Failed in check_mode '%s'" % (args._addonname, str(mode)), xbmc.LOGERROR)
@@ -87,6 +116,15 @@ def check_mode(args):
 def showMainMenue(args):
 	"""Show main menu
 	"""
+	if args._login:
+		list.add_item(args,
+				{'title':	args._addon.getLocalizedString(30028),
+				'mode':		'mylist'})
+	else:
+		list.add_item(args,
+				{'title':	args._addon.getLocalizedString(30029),
+				'mode':		'login'})
+
 	list.add_item(args,
 			{'title':	args._addon.getLocalizedString(30026),
 			'mode':		'popular'})
