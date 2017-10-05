@@ -17,8 +17,8 @@ Compatibility
 | Linux | 17.x  | Yes  |
 | MacOS | 17.x  | untested  |
 | Android | 17.x  | Yes  |
-| RaspberryPi | 17.x  | Yes  |
 | iOS | 17.x  | untested  |
+| RaspberryPi | 17.x  | Yes  |
 ***
 
 What this plugin currently can do:

@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.video.watchbox" name="Watchbox" version="0.2.0" provider-name="MrKrabat">
-	<requires>
-		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<language>en de</language>
-		<summary lang="en_GB">Movies and series from the top genres | WATCHBOX</summary>
-		<summary lang="de_DE">Filme und Serien aus den Top Genres | WATCHBOX</summary>
-		<description lang="en_GB">Whether anime, horror, action or comedy! Browse through our top genres! All films and series for free as online stream at WATCHBOX.</description>
-		<description lang="de_DE">Ob Anime, Horror, Action oder Komödie! Stöber durch unsere Top Genres! Alle Filme und Serien kostenlos im Online-Stream bei WATCHBOX.</description>
-		<disclaimer lang="en">WARNING: This plugin is only available from Germany by geo blocking!</disclaimer>
-		<disclaimer lang="de">HINWEIS: Dieses Plugin ist durch Geoblocking nur von Deutschland aus verfügbar!</disclaimer>
-		<license>GNU Affero General Public License, v3</license>
-		<forum></forum>
-		<website>https://www.watchbox.de/</website>
-		<email></email>
-		<source>https://github.com/MrKrabat/plugin.video.watchbox</source>
-	</extension>
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language>de</language>
+        <summary lang="en_GB">Movies and series from the top genres | WATCHBOX</summary>
+        <summary lang="de_DE">Filme und Serien aus den Top Genres | WATCHBOX</summary>
+        <description lang="en_GB">Whether anime, horror, action or comedy! Browse through our top genres! All films and series for free as online stream at WATCHBOX.</description>
+        <description lang="de_DE">Ob Anime, Horror, Action oder Komödie! Stöber durch unsere Top Genres! Alle Filme und Serien kostenlos im Online-Stream bei WATCHBOX.</description>
+        <disclaimer lang="en_GB">WARNING: This plugin is only available from Germany by geo blocking!</disclaimer>
+        <disclaimer lang="de_DE">HINWEIS: Dieses Plugin ist durch Geoblocking nur von Deutschland aus verfügbar!</disclaimer>
+        <news>v0.2.0 (2017.10.03)[CR]- Added popular and new category[CR]- Added login with watchlist</news>
+        <license>GNU Affero General Public License, v3</license>
+        <forum>https://www.kodinerds.net/index.php/Thread/58398-Release-Watchbox-de/</forum>
+        <website>https://www.watchbox.de/</website>
+        <source>https://github.com/MrKrabat/plugin.video.watchbox</source>
+        <email></email>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
 </addon>

@@ -20,18 +20,18 @@ import xbmc
 import xbmcaddon
 
 
-_plugId = 'plugin.video.watchbox'
+_plugId = "plugin.video.watchbox"
 
 # plugin constants
-__addon__  = xbmcaddon.Addon(id=_plugId)
-__plugin__    = __addon__.getAddonInfo('name')
-__version__   = __addon__.getAddonInfo('version')
+__addon__   = xbmcaddon.Addon(id=_plugId)
+__plugin__  = __addon__.getAddonInfo("name")
+__version__ = __addon__.getAddonInfo("version")
 
-xbmc.log("[PLUGIN] %s: version %s' initialized" % (__plugin__, __version__))
+xbmc.log("[PLUGIN] %s: version %s initialized" % (__plugin__, __version__))
 
 if __name__ == "__main__":
-	from resources.lib import watchbox
-	# start addon
-	watchbox.main()
+    from resources.lib import watchbox
+    # start addon
+    watchbox.main()
 
 sys.modules.clear()

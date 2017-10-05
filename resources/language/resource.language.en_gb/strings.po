@@ -1,83 +1,83 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
 msgid ""
 msgstr ""
-"Project-Id-Version: XBMC-Addons\n"
-"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
-"POT-Creation-Date: 2013-07-17 09:48+0000\n"
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
 # Watchbox Settings
 
 msgctxt "#30001"
 msgid "Username"
-msgstr "Benutzername"
+msgstr ""
 
 msgctxt "#30002"
 msgid "Password"
-msgstr "Passwort"
+msgstr ""
 
 
 # Watchbox Menue
 
 msgctxt "#30020"
 msgid "Genres"
-msgstr "Genres"
+msgstr ""
 
 msgctxt "#30021"
 msgid "Search"
-msgstr "Suchen"
+msgstr ""
 
 msgctxt "#30022"
 msgid "All"
-msgstr "Alle"
+msgstr ""
 
 msgctxt "#30023"
 msgid "Movies"
-msgstr "Filme"
+msgstr ""
 
 msgctxt "#30024"
 msgid "TV Shows"
-msgstr "Serien"
+msgstr ""
 
 msgctxt "#30025"
 msgid "Next page"
-msgstr "Nächste Seite"
+msgstr ""
 
 msgctxt "#30026"
 msgid "Popular on Watchbox"
-msgstr "Beliebt auf Watchbox"
+msgstr ""
 
 msgctxt "#30027"
 msgid "New on Watchbox"
-msgstr "Neu auf Watchbox"
+msgstr ""
 
 msgctxt "#30028"
 msgid "My list"
-msgstr "Meine Liste"
+msgstr ""
 
 msgctxt "#30029"
 msgid "Login"
-msgstr "Einloggen"
+msgstr ""
 
 
 # Watchbox Messages
 
 msgctxt "#30040"
 msgid "An error occurred"
-msgstr "Ein Fehler ist aufgetreten"
+msgstr ""
 
 msgctxt "#30041"
 msgid "Failed to play video or stream"
-msgstr "Fehlgeschlagen das Video oder den Stream abzuspielen"
+msgstr ""
 
 msgctxt "#30042"
 msgid "Login failed"
-msgstr "Login fehlgeschlagen"
+msgstr ""

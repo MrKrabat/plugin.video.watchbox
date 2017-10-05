@@ -28,113 +28,113 @@ import list
 
 
 def main():
-	"""Main function for the addon
-	"""
-	args = cmdargs.parse_args()
+    """Main function for the addon
+    """
+    args = cmdargs.parse_args()
 
-	# check if account is set
-	username = args._addon.getSetting("watchbox_username")
-	password = args._addon.getSetting("watchbox_password")
+    # check if account is set
+    username = args._addon.getSetting("watchbox_username")
+    password = args._addon.getSetting("watchbox_password")
 
-	if username == "" or password == "":
-		xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-		check_mode(args)
-	else:
-		# login
-		success = login.login(username, password, args)
-		if success==True:
-			# list menue
-			args._login = True
-			xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-			check_mode(args)
-		else:
-			# login failed
-			xbmc.log("[PLUGIN] %s: Login failed" % args._addonname, xbmc.LOGERROR)
-			xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30042))
+    if (username == "") or (password == ""):
+        xbmcplugin.setContent(int(sys.argv[1]), "tvshows")
+        check_mode(args)
+    else:
+        # login
+        success = login.login(username, password, args)
+        if success == True:
+            # list menue
+            args._login = True
+            xbmcplugin.setContent(int(sys.argv[1]), "tvshows")
+            check_mode(args)
+        else:
+            # login failed
+            xbmc.log("[PLUGIN] %s: Login failed" % args._addonname, xbmc.LOGERROR)
+            xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30042))
 
-			xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-			check_mode(args)
+            xbmcplugin.setContent(int(sys.argv[1]), "tvshows")
+            check_mode(args)
 
 
 def check_mode(args):
-	"""Run mode-specific functions
-	"""
-	try:
-		mode = args.mode
-	except:
-		# call from other plugin
-		mode = 'videoplay'
-		args.name = 'Video'
-		args.episode, args.rating, args.plot, args.icon = ('None',)*4
+    """Run mode-specific functions
+    """
+    try:
+        mode = args.mode
+    except:
+        # call from other plugin
+        mode = "videoplay"
+        args.name = "Video"
+        args.episode, args.rating, args.plot, args.icon = ("None",) * 4
 
-		if hasattr(args,'id'):
-			args.url = 'https://www.watchbox.de/serien/test-' + args.id + '/'
-		elif hasattr(args,'url'):
-			args.url = args.url[23:]
-		else:
-			mode = None
+        if hasattr(args, "id"):
+            args.url = "https://www.watchbox.de/serien/test-" + args.id + "/"
+        elif hasattr(args, "url"):
+            args.url = args.url[23:]
+        else:
+            mode = None
 
-	if mode is None:
-		showMainMenue(args)
-	elif mode == 'popular':
-		netapi.genre_view(3, args)
-	elif mode == 'new':
-		netapi.genre_view(4, args)
-	elif mode == 'genres':
-		netapi.genres_show(args)
-	elif mode == 'genre_list':
-		netapi.genre_list(args)
-	elif mode == 'genre_all':
-		netapi.genre_view(0, args)
-	elif mode == 'genre_movie':
-		netapi.genre_view(1, args)
-	elif mode == 'genre_tvshows':
-		netapi.genre_view(2, args)
-	elif mode == 'season_list':
-		netapi.season_list(args)
-	elif mode == 'episode_list':
-		netapi.episode_list(args)
-	elif mode == 'search':
-		netapi.search(args)
-	elif mode == 'videoplay':
-		netapi.startplayback(args)
-	elif mode == 'login' and not args._login:
-		# open addon settings
-		args._addon.openSettings()
-		return False
-	elif mode == 'login' and args._login:
-		showMainMenue(args)
-	elif mode == 'mylist' and args._login:
-		netapi.mylist(args)
-	else:
-		# unkown mode
-		xbmc.log("[PLUGIN] %s: Failed in check_mode '%s'" % (args._addonname, str(mode)), xbmc.LOGERROR)
-		xbmcgui.Dialog().notification(args._addonname, args._addon.getLocalizedString(30041), xbmcgui.NOTIFICATION_ERROR)
-		showMainMenue(args)
+    if mode is None:
+        showMainMenue(args)
+    elif mode == "popular":
+        netapi.genre_view(3, args)
+    elif mode == "new":
+        netapi.genre_view(4, args)
+    elif mode == "genres":
+        netapi.genres_show(args)
+    elif mode == "genre_list":
+        netapi.genre_list(args)
+    elif mode == "genre_all":
+        netapi.genre_view(0, args)
+    elif mode == "genre_movie":
+        netapi.genre_view(1, args)
+    elif mode == "genre_tvshows":
+        netapi.genre_view(2, args)
+    elif mode == "season_list":
+        netapi.season_list(args)
+    elif mode == "episode_list":
+        netapi.episode_list(args)
+    elif mode == "search":
+        netapi.search(args)
+    elif mode == "videoplay":
+        netapi.startplayback(args)
+    elif mode == "login" and not args._login:
+        # open addon settings
+        args._addon.openSettings()
+        return False
+    elif mode == "login" and args._login:
+        showMainMenue(args)
+    elif mode == "mylist" and args._login:
+        netapi.mylist(args)
+    else:
+        # unkown mode
+        xbmc.log("[PLUGIN] %s: Failed in check_mode '%s'" % (args._addonname, str(mode)), xbmc.LOGERROR)
+        xbmcgui.Dialog().notification(args._addonname, args._addon.getLocalizedString(30041), xbmcgui.NOTIFICATION_ERROR)
+        showMainMenue(args)
 
 
 def showMainMenue(args):
-	"""Show main menu
-	"""
-	if args._login:
-		list.add_item(args,
-				{'title':	args._addon.getLocalizedString(30028),
-				'mode':		'mylist'})
-	else:
-		list.add_item(args,
-				{'title':	args._addon.getLocalizedString(30029),
-				'mode':		'login'})
+    """Show main menu
+    """
+    if args._login:
+        list.add_item(args,
+                      {"title": args._addon.getLocalizedString(30028),
+                       "mode":  "mylist"})
+    else:
+        list.add_item(args,
+                      {"title": args._addon.getLocalizedString(30029),
+                       "mode":   "login"})
 
-	list.add_item(args,
-			{'title':	args._addon.getLocalizedString(30026),
-			'mode':		'popular'})
-	list.add_item(args,
-			{'title':	args._addon.getLocalizedString(30027),
-			'mode':		'new'})
-	list.add_item(args,
-			{'title':	args._addon.getLocalizedString(30020),
-			'mode':		'genres'})
-	list.add_item(args,
-			{'title':	args._addon.getLocalizedString(30021),
-			'mode':		'search'})
-	list.endofdirectory()
+    list.add_item(args,
+                  {"title": args._addon.getLocalizedString(30026),
+                   "mode":  "popular"})
+    list.add_item(args,
+                  {"title": args._addon.getLocalizedString(30027),
+                   "mode":  "new"})
+    list.add_item(args,
+                  {"title": args._addon.getLocalizedString(30020),
+                   "mode":  "genres"})
+    list.add_item(args,
+                  {"title": args._addon.getLocalizedString(30021),
+                   "mode":  "search"})
+    list.endofdirectory()
