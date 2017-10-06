@@ -25,7 +25,7 @@ import xbmc
 import xbmcgui
 
 import login
-import list
+import view
 
 
 def genres_show(args):
@@ -38,7 +38,7 @@ def genres_show(args):
     div = soup.find("div", {"class": "grid_genres_b"})
 
     for item in div.find_all("section"):
-        list.add_item(args,
+        view.add_item(args,
                       {"url":   item.a["href"],
                        "title": item.find("div", {"class": "text_browse-teaser-title"}).string.strip().encode("utf-8"),
                        "genre": item.find("div", {"class": "text_browse-teaser-title"}).string.strip().encode("utf-8"),
@@ -47,31 +47,31 @@ def genres_show(args):
                       isFolder=True, mediatype="video")
 
 
-    list.endofdirectory()
+    view.endofdirectory()
 
 
 def genre_list(args):
     """List options for gernre
     """
-    list.add_item(args,
+    view.add_item(args,
                   {"title": args._addon.getLocalizedString(30022),
                    "url":   args.url,
                    "plot":  args.plot,
                    "genre": args.genre,
                    "mode":  "genre_all"})
-    list.add_item(args,
+    view.add_item(args,
                   {"title": args._addon.getLocalizedString(30023),
                    "url":   args.url,
                    "plot":  args.plot,
                    "genre": args.genre,
                    "mode":  "genre_movie"})
-    list.add_item(args,
+    view.add_item(args,
                   {"title": args._addon.getLocalizedString(30024),
                    "url":   args.url,
                    "plot":  args.plot,
                    "genre": args.genre,
                    "mode":  "genre_tvshows"})
-    list.endofdirectory()
+    view.endofdirectory()
 
 
 def genre_view(mode, args):
@@ -103,7 +103,7 @@ def genre_view(mode, args):
             thumb = "https:" + thumb
 
         if (mode == 1) or (".html" in item.a["href"]):
-            list.add_item(args,
+            view.add_item(args,
                           {"url":          item.a["href"],
                            "title":        item.find("div", {"class": "text_teaser-portrait-title"}).string.strip().encode("utf-8"),
                            "thumb":        thumb,
@@ -113,7 +113,7 @@ def genre_view(mode, args):
                            "plot":         item.find("div", {"class": "text_teaser-portrait-description"}).string.strip().encode("utf-8")},
                           isFolder=False, mediatype="video")
         else:
-            list.add_item(args,
+            view.add_item(args,
                           {"url":          item.a["href"],
                            "title":        item.find("div", {"class": "text_teaser-portrait-title"}).string.strip().encode("utf-8"),
                            "thumb":        thumb,
@@ -125,7 +125,7 @@ def genre_view(mode, args):
 
 
     if "<span>Zeig mir mehr</span>" in html:
-        list.add_item(args,
+        view.add_item(args,
                       {"title":  args._addon.getLocalizedString(30025).encode("utf-8"),
                        "url":    args.url,
                        "plot":   args.plot,
@@ -133,7 +133,7 @@ def genre_view(mode, args):
                        "offset": str(int(args.offset) + 1),
                        "mode":   args.mode})
 
-    list.endofdirectory()
+    view.endofdirectory()
 
 
 def mylist(args):
@@ -151,7 +151,7 @@ def mylist(args):
             thumb = "https:" + thumb
 
         if ".html" in item.a["href"]:
-            list.add_item(args,
+            view.add_item(args,
                           {"url":          item.a["href"],
                            "title":        item.find("div", {"class": "text_teaser-portrait-title"}).string.strip().encode("utf-8"),
                            "thumb":        thumb,
@@ -161,7 +161,7 @@ def mylist(args):
                            "plot":         item.find("div", {"class": "text_teaser-portrait-description"}).string.strip().encode("utf-8")},
                           isFolder=False, mediatype="video")
         else:
-            list.add_item(args,
+            view.add_item(args,
                           {"url":          item.a["href"],
                            "title":        item.find("div", {"class": "text_teaser-portrait-title"}).string.strip().encode("utf-8"),
                            "thumb":        thumb,
@@ -172,7 +172,7 @@ def mylist(args):
                           isFolder=True, mediatype="video")
 
 
-    list.endofdirectory()
+    view.endofdirectory()
 
 
 def season_list(args):
@@ -184,11 +184,11 @@ def season_list(args):
     soup = BeautifulSoup(html, "html.parser")
     ul = soup.find("ul", {"class": "season-panel"})
     if not ul:
-        list.endofdirectory()
+        view.endofdirectory()
         return
 
     for item in ul.find_all("li"):
-        list.add_item(args,
+        view.add_item(args,
                       {"url":          item.a["href"],
                        "title":        item.a.string.strip().encode("utf-8"),
                        "thumb":        args.icon,
@@ -199,7 +199,7 @@ def season_list(args):
                       isFolder=True, mediatype="video")
 
 
-    list.endofdirectory()
+    view.endofdirectory()
 
 
 def episode_list(args):
@@ -211,7 +211,7 @@ def episode_list(args):
     soup = BeautifulSoup(html, "html.parser")
     div = soup.find("div", {"class": "swiper-wrapper"})
     if not div:
-        list.endofdirectory()
+        view.endofdirectory()
         return
     regex = r"([0-9]{1,3})"
 
@@ -220,7 +220,7 @@ def episode_list(args):
         matches = re.findall(regex, episode)
 
         if not len(matches) == 2:
-            list.add_item(args,
+            view.add_item(args,
                           {"url":          item.a["href"],
                            "title":        item.find("div", {"class": "text_teaser-landscape-title"}).string.strip().encode("utf-8"),
                            "thumb":        args.icon,
@@ -230,7 +230,7 @@ def episode_list(args):
                            "plot":         args.plot},
                           isFolder=False, mediatype="video")
         else:
-            list.add_item(args,
+            view.add_item(args,
                           {"url":          item.a["href"],
                            "title":        matches[1] + " - " + item.find("div", {"class": "text_teaser-landscape-title"}).string.strip().encode("utf-8"),
                            "thumb":        args.icon,
@@ -243,7 +243,7 @@ def episode_list(args):
                           isFolder=False, mediatype="video")
 
 
-    list.endofdirectory()
+    view.endofdirectory()
 
 
 def search(args):
@@ -261,7 +261,7 @@ def search(args):
 
     for item in json_obj["items"]:
         if str(item["type"]) == "film":
-            list.add_item(args,
+            view.add_item(args,
                           {"url":          "/serien/test-" + str(item["entityId"]) + "/",
                            "title":        item["headline"].encode("utf-8"),
                            "mode":         "videoplay",
@@ -272,7 +272,7 @@ def search(args):
                           isFolder=False, mediatype="video")
 
         else:
-            list.add_item(args,
+            view.add_item(args,
                           {"url":          "/serien/test-" + str(item["entityId"]) + "/",
                            "title":        item["headline"].encode("utf-8"),
                            "mode":         "season_list",
@@ -283,7 +283,7 @@ def search(args):
                           isFolder=True, mediatype="video")
 
 
-    list.endofdirectory()
+    view.endofdirectory()
 
 
 def startplayback(args):

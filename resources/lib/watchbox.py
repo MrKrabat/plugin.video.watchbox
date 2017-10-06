@@ -24,7 +24,7 @@ import xbmcplugin
 import cmdargs
 import login
 import netapi
-import list
+import view
 
 
 def main():
@@ -36,13 +36,13 @@ def main():
     username = args._addon.getSetting("watchbox_username")
     password = args._addon.getSetting("watchbox_password")
 
-    if (username == "") or (password == ""):
+    if not (username and password):
         xbmcplugin.setContent(int(sys.argv[1]), "tvshows")
         check_mode(args)
     else:
         # login
         success = login.login(username, password, args)
-        if success == True:
+        if success:
             # list menue
             args._login = True
             xbmcplugin.setContent(int(sys.argv[1]), "tvshows")
@@ -59,9 +59,9 @@ def main():
 def check_mode(args):
     """Run mode-specific functions
     """
-    try:
+    if hasattr(args, "mode"):
         mode = args.mode
-    except:
+    else:
         # call from other plugin
         mode = "videoplay"
         args.name = "Video"
@@ -117,24 +117,24 @@ def showMainMenue(args):
     """Show main menu
     """
     if args._login:
-        list.add_item(args,
+        view.add_item(args,
                       {"title": args._addon.getLocalizedString(30028),
                        "mode":  "mylist"})
     else:
-        list.add_item(args,
+        view.add_item(args,
                       {"title": args._addon.getLocalizedString(30029),
                        "mode":   "login"})
 
-    list.add_item(args,
+    view.add_item(args,
                   {"title": args._addon.getLocalizedString(30026),
                    "mode":  "popular"})
-    list.add_item(args,
+    view.add_item(args,
                   {"title": args._addon.getLocalizedString(30027),
                    "mode":  "new"})
-    list.add_item(args,
+    view.add_item(args,
                   {"title": args._addon.getLocalizedString(30020),
                    "mode":  "genres"})
-    list.add_item(args,
+    view.add_item(args,
                   {"title": args._addon.getLocalizedString(30021),
                    "mode":  "search"})
-    list.endofdirectory()
+    view.endofdirectory()
