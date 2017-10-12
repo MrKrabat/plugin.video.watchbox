@@ -67,6 +67,14 @@ msgctxt "#30029"
 msgid "Login"
 msgstr ""
 
+msgctxt "#30030"
+msgid "Popular"
+msgstr ""
+
+msgctxt "#30031"
+msgid "New"
+msgstr ""
+
 
 # Watchbox Messages
 

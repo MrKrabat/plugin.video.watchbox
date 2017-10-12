@@ -22,10 +22,12 @@ Compatibility
 ***
 
 What this plugin currently can do:
+- [x] Login with your account
 - [x] Search for movies / tv shows
 - [x] Show/browse all genres
 - [x] Show/browse all seasons
 - [x] Show/browse all episodes per season
+- [x] Show/browse watchlist
 - [x] Display various informations (Kodi displays not all we provide)
 - [x] Watch all movies / tv shows
 ***

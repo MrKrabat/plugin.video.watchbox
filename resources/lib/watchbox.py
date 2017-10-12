@@ -30,7 +30,7 @@ import view
 def main():
     """Main function for the addon
     """
-    args = cmdargs.parse_args()
+    args = cmdargs.parse()
 
     # check if account is set
     username = args._addon.getSetting("watchbox_username")
@@ -61,20 +61,18 @@ def check_mode(args):
     """
     if hasattr(args, "mode"):
         mode = args.mode
-    else:
+    elif hasattr(args, "id"):
         # call from other plugin
         mode = "videoplay"
-        args.name = "Video"
-        args.episode, args.rating, args.plot, args.icon = ("None",) * 4
+        args.url = "https://www.watchbox.de/serien/test-" + args.id + "/"
+    elif hasattr(args, "url"):
+        # call from other plugin
+        mode = "videoplay"
+        args.url = args.url[23:]
+    else:
+        mode = None
 
-        if hasattr(args, "id"):
-            args.url = "https://www.watchbox.de/serien/test-" + args.id + "/"
-        elif hasattr(args, "url"):
-            args.url = args.url[23:]
-        else:
-            mode = None
-
-    if mode is None:
+    if not mode:
         showMainMenue(args)
     elif mode == "popular":
         netapi.genre_view(3, args)
@@ -90,6 +88,8 @@ def check_mode(args):
         netapi.genre_view(1, args)
     elif mode == "genre_tvshows":
         netapi.genre_view(2, args)
+    elif mode == "genre_new":
+        netapi.genre_view(5, args)
     elif mode == "season_list":
         netapi.season_list(args)
     elif mode == "episode_list":
