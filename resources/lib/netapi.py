@@ -201,8 +201,11 @@ def season_list(args):
     if not ul:
         view.endofdirectory()
         return
-    plot = soup.find("p", {"class": "more-text"})
-    plot.span.decompose()
+    try:
+        plot = soup.find("p", {"class": "more-text"})
+        plot.span.decompose()
+    except AttributeError:
+        pass
 
     for item in ul.find_all("li"):
         view.add_item(args,
