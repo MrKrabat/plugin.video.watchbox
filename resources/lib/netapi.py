@@ -103,8 +103,11 @@ def genre_view(mode, args):
     div = soup.find("div", {"class": "teaser-pagination__page"})
 
     for item in div.find_all("section"):
-        year = item.find("span", {"class": "teaser__production-data"})
-        year = re.search(r"\d{4}", str(year)).group(0)
+        try:
+            year = item.find("span", {"class": "teaser__production-data"})
+            year = re.search(r"\d{4}", str(year)).group(0)
+        except AttributeError:
+            year = ""
         duration = item.find("span", {"class": "teaser__length"}).string.strip()[:-5]
         duration = str(int(duration) * 60)
         thumb = item.img["src"].replace(" ", "%20")
@@ -154,8 +157,11 @@ def mylist(args):
     div = soup.find("div", {"class": "grid"})
 
     for item in div.find_all("section"):
-        year = item.find("span", {"class": "teaser__production-data"})
-        year = re.search(r"\d{4}", str(year)).group(0)
+        try:
+            year = item.find("span", {"class": "teaser__production-data"})
+            year = re.search(r"\d{4}", str(year)).group(0)
+        except AttributeError:
+            year = ""
         thumb = item.img["src"].replace(" ", "%20")
         if thumb[:4] != "http":
             thumb = "https:" + thumb
