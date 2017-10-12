@@ -1,3 +1,9 @@
+v0.3.0 (2017.10.12)
+- Internal rewrites
+- Small optimations
+- Added popular and new for genres
+- Added more media informations
+
 v0.2.0 (2017.10.03)
 - Added popular and new category
 - Added login with watchlist
