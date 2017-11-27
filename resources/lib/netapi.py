@@ -108,8 +108,8 @@ def genre_view(mode, args):
             year = re.search(r"\d{4}", str(year)).group(0)
         except AttributeError:
             year = ""
-        duration = item.find("span", {"class": "teaser__length"}).string.strip()[:-5]
-        duration = str(int(duration) * 60)
+        #duration = item.find("span", {"class": "teaser__length"}).string.strip()[:-5]
+        #duration = str(int(duration) * 60)
         thumb = item.img["src"].replace(" ", "%20")
         if thumb[:4] != "http":
             thumb = "https:" + thumb
@@ -122,7 +122,7 @@ def genre_view(mode, args):
                            "thumb":    thumb,
                            "fanart":   thumb,
                            "year":     year,
-                           "duration": duration,
+                           #"duration": duration,
                            "plot":     item.find("div", {"class": "text_teaser-portrait-description"}).string.strip().encode("utf-8")},
                           isFolder=False, mediatype="video")
         else:
@@ -133,7 +133,7 @@ def genre_view(mode, args):
                            "thumb":    thumb,
                            "fanart":   thumb,
                            "year":     year,
-                           "duration": duration,
+                           #"duration": duration,
                            "plot":     item.find("div", {"class": "text_teaser-portrait-description"}).string.strip().encode("utf-8")},
                           isFolder=True, mediatype="video")
 
@@ -236,8 +236,8 @@ def episode_list(args):
     for item in div.find_all("section"):
         episode = item.find("div", {"class": "teaser__season-info"}).string.strip().encode("utf-8")
         matches = re.findall(r"([0-9]{1,3})", episode)
-        duration = item.find("span", {"class": "teaser__length"}).string.strip()[:-5]
-        duration = str(int(duration) * 60)
+        #duration = item.find("span", {"class": "teaser__length"}).string.strip()[:-5]
+        #duration = str(int(duration) * 60)
         thumb = item.img["data-src"].replace(" ", "%20")
         if thumb[:4] != "http":
             thumb = "https:" + thumb
@@ -248,7 +248,7 @@ def episode_list(args):
                            "title":    item.find("div", {"class": "text_teaser-landscape-title"}).string.strip().encode("utf-8"),
                            "thumb":    thumb,
                            "fanart":   args.fanart,
-                           "duration": duration,
+                           #"duration": duration,
                            "mode":     "videoplay"},
                           isFolder=False, mediatype="video")
         else:
@@ -259,7 +259,7 @@ def episode_list(args):
                            "fanart":   args.fanart,
                            "episode":  matches[1],
                            "season":   matches[0],
-                           "duration": duration,
+                           #"duration": duration,
                            "mode":     "videoplay"},
                           isFolder=False, mediatype="video")
 
