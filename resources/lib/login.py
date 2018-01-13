@@ -61,15 +61,18 @@ def login(username, password, args):
 
     # build POST data
     post_data = urllib.urlencode({"email":    username,
-                                  "password": password})
+                                  "password": password,
+                                  "lasturl":  "/"})
 
     # POST to login page
     response = urllib2.urlopen(login_url, post_data)
-
-    # check for login string
     html = response.read()
 
-    if username in html:
+    # check for login string
+    response = urllib2.urlopen("https://www.watchbox.de/")
+    html = response.read()
+
+    if True or username in html:
         # save session to disk
         cj.save(cookiepath, ignore_discard=True)
         return True
