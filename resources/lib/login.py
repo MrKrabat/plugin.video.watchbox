@@ -71,7 +71,6 @@ def login(username, password, args):
     # check for login string
     response = urllib2.urlopen("https://www.watchbox.de/profil/")
     html = response.read()
-    xbmc.log(html, xbmc.LOGERROR)
 
     if username in html:
         # save session to disk
