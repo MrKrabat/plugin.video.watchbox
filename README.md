@@ -17,7 +17,7 @@ What this plugin currently can do:
 - [x] Show/browse all episodes per season
 - [x] Show/browse new or popular content
 - [x] Show/browse watchlist
-- [x] Display various informations (Kodi displays not all we provide)
+- [x] Display various informations
 - [x] Watch all movies / tv shows
 ***
 
