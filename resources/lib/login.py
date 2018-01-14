@@ -26,7 +26,7 @@ import xbmc
 def login(username, password, args):
     """Login and session handler
     """
-    login_url = "https://www.watchbox.de/login"
+    login_url = "https://www.watchbox.de/login/"
 
     # create cookie path
     cookiepath = os.path.join(
@@ -48,7 +48,7 @@ def login(username, password, args):
         cj.load(cookiepath, ignore_discard=True)
 
         # check if session is valid
-        response = urllib2.urlopen("https://www.watchbox.de/")
+        response = urllib2.urlopen("https://www.watchbox.de/profil/")
         html = response.read()
 
         if username in html:
@@ -69,10 +69,11 @@ def login(username, password, args):
     html = response.read()
 
     # check for login string
-    response = urllib2.urlopen("https://www.watchbox.de/")
+    response = urllib2.urlopen("https://www.watchbox.de/profil/")
     html = response.read()
+    xbmc.log(html, xbmc.LOGERROR)
 
-    if True or username in html:
+    if username in html:
         # save session to disk
         cj.save(cookiepath, ignore_discard=True)
         return True
