@@ -51,7 +51,6 @@ def add_item(args, info, isFolder=True, total_items=0, mediatype="video"):
 
     # get infoLabels
     infoLabels = make_infolabel(args, info)
-    infoLabels["genre"] = "Anime"
 
     # get url
     u = build_url(args, info)
