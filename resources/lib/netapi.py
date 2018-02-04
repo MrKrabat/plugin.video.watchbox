@@ -18,23 +18,29 @@
 import re
 import sys
 import json
-import urllib
-import urllib2
 from bs4 import BeautifulSoup
+try:
+    from urllib import quote_plus
+except ImportError:
+    from urllib.parse import quote_plus
+try:
+    from urllib2 import urlopen
+except ImportError:
+    from urllib.request import urlopen
 
 import xbmc
 import xbmcgui
 import xbmcplugin
 
-import login
-import view
+from . import login
+from . import view
 
 
 def genres_show(args):
     """Show all genres
     """
-    response = urllib2.urlopen("https://www.watchbox.de/genres/")
-    html = response.read()
+    response = urlopen("https://www.watchbox.de/genres/")
+    html = response.read().decode("utf-8")
 
     soup = BeautifulSoup(html, "html.parser")
     div = soup.find("div", {"class": "grid_genres_b"})
@@ -42,10 +48,10 @@ def genres_show(args):
     for item in div.find_all("section"):
         view.add_item(args,
                       {"url":   item.a["href"],
-                       "title": item.find("div", {"class": "text_browse-teaser-title"}).string.strip().encode("utf-8"),
+                       "title": item.find("div", {"class": "text_browse-teaser-title"}).string.strip(),
                        "mode":  "genre_list",
-                       "genre": item.find("div", {"class": "text_browse-teaser-title"}).string.strip().encode("utf-8"),
-                       "plot":  item.find("div", {"class": "text_browse-teaser-subtitle"}).string.strip().encode("utf-8")},
+                       "genre": item.find("div", {"class": "text_browse-teaser-title"}).string.strip(),
+                       "plot":  item.find("div", {"class": "text_browse-teaser-subtitle"}).string.strip()},
                       isFolder=True, mediatype="video")
 
     view.endofdirectory()
@@ -85,26 +91,26 @@ def genre_view(mode, args):
         url = "?page=" + str(args.offset)
 
     if mode == 1:
-        response = urllib2.urlopen("https://www.watchbox.de" + args.url + "filme/" + url)
+        response = urlopen("https://www.watchbox.de" + args.url + "filme/" + url)
     elif mode == 2:
-        response = urllib2.urlopen("https://www.watchbox.de" + args.url + "serien/" + url)
+        response = urlopen("https://www.watchbox.de" + args.url + "serien/" + url)
     elif mode == 3:
-        response = urllib2.urlopen("https://www.watchbox.de/beste/" + url)
+        response = urlopen("https://www.watchbox.de/beste/" + url)
     elif mode == 4:
-        response = urllib2.urlopen("https://www.watchbox.de/neu/" + url)
+        response = urlopen("https://www.watchbox.de/neu/" + url)
     elif mode == 5:
-        response = urllib2.urlopen("https://www.watchbox.de" + args.url + "neu/" + url)
+        response = urlopen("https://www.watchbox.de" + args.url + "neu/" + url)
     else:
-        response = urllib2.urlopen("https://www.watchbox.de" + args.url + "beste/" + url)
+        response = urlopen("https://www.watchbox.de" + args.url + "beste/" + url)
 
-    html = response.read()
+    html = response.read().decode("utf-8")
 
     soup = BeautifulSoup(html, "html.parser")
     div = soup.find("div", {"class": "teaser-pagination__page"})
 
     for item in div.find_all("section"):
         try:
-            meta = item.find("div", {"class": "text_teaser-portrait-meta"}).string.strip().encode("utf-8")
+            meta = item.find("div", {"class": "text_teaser-portrait-meta"}).string.strip()
             duration, country, year, fsk = meta.split("|")
             duration = duration.strip()[:-5]
             duration = str(int(duration) * 60)
@@ -119,29 +125,29 @@ def genre_view(mode, args):
         if (mode == 1) or (".html" in item.a["href"]):
             view.add_item(args,
                           {"url":      item.a["href"],
-                           "title":    item.find("div", {"class": "text_teaser-portrait-title"}).string.strip().encode("utf-8"),
+                           "title":    item.find("div", {"class": "text_teaser-portrait-title"}).string.strip(),
                            "mode":     "videoplay",
                            "thumb":    thumb,
                            "fanart":   thumb,
                            "year":     year,
                            "duration": duration,
-                           "plot":     item.find("div", {"class": "text_teaser-portrait-description"}).string.strip().encode("utf-8")},
+                           "plot":     item.find("div", {"class": "text_teaser-portrait-description"}).string.strip()},
                           isFolder=False, mediatype="video")
         else:
             view.add_item(args,
                           {"url":      item.a["href"],
-                           "title":    item.find("div", {"class": "text_teaser-portrait-title"}).string.strip().encode("utf-8"),
+                           "title":    item.find("div", {"class": "text_teaser-portrait-title"}).string.strip(),
                            "mode":     "season_list",
                            "thumb":    thumb,
                            "fanart":   thumb,
                            "year":     year,
                            "duration": duration,
-                           "plot":     item.find("div", {"class": "text_teaser-portrait-description"}).string.strip().encode("utf-8")},
+                           "plot":     item.find("div", {"class": "text_teaser-portrait-description"}).string.strip()},
                           isFolder=True, mediatype="video")
 
     if "<span>Zeig mir mehr</span>" in html:
         view.add_item(args,
-                      {"title":  args._addon.getLocalizedString(30025).encode("utf-8"),
+                      {"title":  args._addon.getLocalizedString(30025),
                        "url":    getattr(args, "url", ""),
                        "offset": str(int(getattr(args, "offset", 0)) + 1),
                        "mode":   args.mode})
@@ -152,15 +158,15 @@ def genre_view(mode, args):
 def mylist(args):
     """Show my list
     """
-    response = urllib2.urlopen("https://www.watchbox.de/meine-liste")
-    html = response.read()
+    response = urlopen("https://www.watchbox.de/meine-liste")
+    html = response.read().decode("utf-8")
 
     soup = BeautifulSoup(html, "html.parser")
     div = soup.find("div", {"class": "grid"})
 
     for item in div.find_all("section"):
         try:
-            meta = item.find("div", {"class": "text_teaser-portrait-meta"}).string.strip().encode("utf-8")
+            meta = item.find("div", {"class": "text_teaser-portrait-meta"}).string.strip()
             country, year, fsk = meta.split("|")
             year = year.strip()
         except TypeError:
@@ -172,22 +178,22 @@ def mylist(args):
         if ".html" in item.a["href"]:
             view.add_item(args,
                           {"url":    item.a["href"],
-                           "title":  item.find("div", {"class": "text_teaser-portrait-title"}).string.strip().encode("utf-8"),
+                           "title":  item.find("div", {"class": "text_teaser-portrait-title"}).string.strip(),
                            "mode":   "videoplay",
                            "thumb":  thumb,
                            "fanart": thumb,
                            "year":   year,
-                           "plot":   item.find("div", {"class": "text_teaser-portrait-description"}).string.strip().encode("utf-8")},
+                           "plot":   item.find("div", {"class": "text_teaser-portrait-description"}).string.strip()},
                           isFolder=False, mediatype="video")
         else:
             view.add_item(args,
                           {"url":    item.a["href"],
-                           "title":  item.find("div", {"class": "text_teaser-portrait-title"}).string.strip().encode("utf-8"),
+                           "title":  item.find("div", {"class": "text_teaser-portrait-title"}).string.strip(),
                            "mode":   "season_list",
                            "thumb":  thumb,
                            "fanart": thumb,
                            "year":   year,
-                           "plot":   item.find("div", {"class": "text_teaser-portrait-description"}).string.strip().encode("utf-8")},
+                           "plot":   item.find("div", {"class": "text_teaser-portrait-description"}).string.strip()},
                           isFolder=True, mediatype="video")
 
     view.endofdirectory()
@@ -196,8 +202,8 @@ def mylist(args):
 def season_list(args):
     """Show all seasons
     """
-    response = urllib2.urlopen("https://www.watchbox.de" + args.url)
-    html = response.read()
+    response = urlopen("https://www.watchbox.de" + args.url)
+    html = response.read().decode("utf-8")
 
     soup = BeautifulSoup(html, "html.parser")
     ul = soup.find("ul", {"class": "season-panel"})
@@ -213,10 +219,10 @@ def season_list(args):
     for item in ul.find_all("li"):
         view.add_item(args,
                       {"url":         item.a["href"],
-                       "title":       item.a.string.strip().encode("utf-8"),
+                       "title":       item.a.string.strip(),
                        "thumb":       args.thumb,
                        "fanart":      args.fanart,
-                       "plot":        plot.get_text().strip().encode("utf-8"),
+                       "plot":        plot.get_text().strip(),
                        "plotoutline": args.plot,
                        "mode":        "episode_list"},
                       isFolder=True, mediatype="video")
@@ -227,8 +233,8 @@ def season_list(args):
 def episode_list(args):
     """Show all episodes
     """
-    response = urllib2.urlopen("https://www.watchbox.de" + args.url)
-    html = response.read()
+    response = urlopen("https://www.watchbox.de" + args.url)
+    html = response.read().decode("utf-8")
 
     soup = BeautifulSoup(html, "html.parser")
     div = soup.find("div", {"class": "swiper-wrapper"})
@@ -237,7 +243,7 @@ def episode_list(args):
         return
 
     for item in div.find_all("section"):
-        episode = item.find("div", {"class": "teaser__season-info"}).string.strip().encode("utf-8")
+        episode = item.find("div", {"class": "teaser__season-info"}).string.strip()
         matches = re.findall(r"([0-9]{1,3})", episode)
         thumb = item.img["data-src"].replace(" ", "%20")
         if thumb[:4] != "http":
@@ -246,7 +252,7 @@ def episode_list(args):
         if not len(matches) == 2:
             view.add_item(args,
                           {"url":      item.a["href"],
-                           "title":    item.find("div", {"class": "text_teaser-landscape-title"}).string.strip().encode("utf-8"),
+                           "title":    item.find("div", {"class": "text_teaser-landscape-title"}).string.strip(),
                            "thumb":    thumb,
                            "fanart":   args.fanart,
                            "duration": getattr(args, "duration", ""),
@@ -255,7 +261,7 @@ def episode_list(args):
         else:
             view.add_item(args,
                           {"url":      item.a["href"],
-                           "title":    matches[1] + " - " + item.find("div", {"class": "text_teaser-landscape-title"}).string.strip().encode("utf-8"),
+                           "title":    matches[1] + " - " + item.find("div", {"class": "text_teaser-landscape-title"}).string.strip(),
                            "thumb":    thumb,
                            "fanart":   args.fanart,
                            "episode":  matches[1],
@@ -274,8 +280,8 @@ def search(args):
     if not d or len(d) < 2:
         return
 
-    response = urllib2.urlopen("https://api.watchbox.de/v1/search/?page=1&maxPerPage=28&active=true&term=" + urllib.quote_plus(d))
-    html = response.read()
+    response = urlopen("https://api.watchbox.de/v1/search/?page=1&maxPerPage=28&active=true&term=" + quote_plus(d))
+    html = response.read().decode("utf-8")
 
     # parse json
     json_obj = json.loads(html)
@@ -284,26 +290,26 @@ def search(args):
         if str(item["type"]) == "film":
             view.add_item(args,
                           {"url":         "/serien/test-" + str(item["entityId"]) + "/",
-                           "title":       item["headline"].encode("utf-8"),
+                           "title":       item["headline"],
                            "mode":        "videoplay",
                            "thumb":       "https://aiswatchbox-a.akamaihd.net/watchbox/format/" + str(item["entityId"]) + "_dvdcover/600x840/test.jpg",
                            "fanart":      "https://aiswatchbox-a.akamaihd.net/watchbox/format/" + str(item["entityId"]) + "_dvdcover/600x840/test.jpg",
-                           "year":        item["productionYear"].encode("utf-8"),
-                           "genre":       item["genres"][0].encode("utf-8"),
-                           "plot":        item["description"].encode("utf-8"),
-                           "plotoutline": item["infoTextShort"].encode("utf-8")},
+                           "year":        item["productionYear"],
+                           "genre":       item["genres"][0],
+                           "plot":        item["description"],
+                           "plotoutline": item["infoTextShort"]},
                           isFolder=False, mediatype="video")
         else:
             view.add_item(args,
                           {"url":         "/serien/test-" + str(item["entityId"]) + "/",
-                           "title":       item["headline"].encode("utf-8"),
+                           "title":       item["headline"],
                            "mode":        "season_list",
                            "thumb":       "https://aiswatchbox-a.akamaihd.net/watchbox/format/" + str(item["entityId"]) + "_dvdcover/600x840/test.jpg",
                            "fanart":      "https://aiswatchbox-a.akamaihd.net/watchbox/format/" + str(item["entityId"]) + "_dvdcover/600x840/test.jpg",
-                           "year":        item["productionYear"].encode("utf-8"),
-                           "genre":       item["genres"][0].encode("utf-8"),
-                           "plot":        item["description"].encode("utf-8"),
-                           "plotoutline": item["infoTextShort"].encode("utf-8")},
+                           "year":        item["productionYear"],
+                           "genre":       item["genres"][0],
+                           "plot":        item["description"],
+                           "plotoutline": item["infoTextShort"]},
                           isFolder=True, mediatype="video")
 
     view.endofdirectory()
@@ -312,8 +318,8 @@ def search(args):
 def startplayback(args):
     """Plays a video
     """
-    response = urllib2.urlopen("https://www.watchbox.de" + args.url)
-    html = response.read()
+    response = urlopen("https://www.watchbox.de" + args.url)
+    html = response.read().decode("utf-8")
 
     regex = r"hls\: '(.*?)',"
     matches = re.search(regex, html).group(1)

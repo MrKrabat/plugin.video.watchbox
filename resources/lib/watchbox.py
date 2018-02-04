@@ -21,10 +21,10 @@ import xbmc
 import xbmcgui
 import xbmcplugin
 
-import cmdargs
-import login
-import netapi
-import view
+from . import cmdargs
+from . import login
+from . import netapi
+from . import view
 
 
 def main():
@@ -36,24 +36,19 @@ def main():
     username = args._addon.getSetting("watchbox_username")
     password = args._addon.getSetting("watchbox_password")
 
-    if not (username and password):
-        xbmcplugin.setContent(int(sys.argv[1]), "tvshows")
-        check_mode(args)
-    else:
+    if username and password:
         # login
         success = login.login(username, password, args)
         if success:
             # list menue
             args._login = True
-            xbmcplugin.setContent(int(sys.argv[1]), "tvshows")
-            check_mode(args)
         else:
             # login failed
             xbmc.log("[PLUGIN] %s: Login failed" % args._addonname, xbmc.LOGERROR)
             xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30042))
 
-            xbmcplugin.setContent(int(sys.argv[1]), "tvshows")
-            check_mode(args)
+    xbmcplugin.setContent(int(sys.argv[1]), "tvshows")
+    check_mode(args)
 
 
 def check_mode(args):
@@ -101,7 +96,6 @@ def check_mode(args):
     elif mode == "login" and not args._login:
         # open addon settings
         args._addon.openSettings()
-        return False
     elif mode == "login" and args._login:
         showMainMenue(args)
     elif mode == "mylist" and args._login:
