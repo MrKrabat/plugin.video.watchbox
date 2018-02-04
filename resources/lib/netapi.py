@@ -145,7 +145,7 @@ def genre_view(mode, args):
                            "plot":     item.find("div", {"class": "text_teaser-portrait-description"}).string.strip()},
                           isFolder=True, mediatype="video")
 
-    if "<span>Zeig mir mehr</span>" in html:
+    if u"<span>Zeig mir mehr</span>" in html:
         view.add_item(args,
                       {"title":  args._addon.getLocalizedString(30025),
                        "url":    getattr(args, "url", ""),
