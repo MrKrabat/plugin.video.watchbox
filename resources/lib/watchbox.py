@@ -61,10 +61,6 @@ def check_mode(args):
     """
     if hasattr(args, "mode"):
         mode = args.mode
-    elif hasattr(args, "id"):
-        # call from other plugin
-        mode = "videoplay"
-        args.url = "https://www.watchbox.de/serien/test-" + args.id + "/"
     elif hasattr(args, "url"):
         # call from other plugin
         mode = "videoplay"
