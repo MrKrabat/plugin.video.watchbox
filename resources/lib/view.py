@@ -81,8 +81,17 @@ def add_item(args, info, isFolder=True, total_items=0, mediatype="video"):
                                 totalItems = total_items)
 
 
-def quote_value(value):
-    return quote_plus(value.encode("utf8") if not isinstance(value, str) else value)
+def quote_value(value, PY2):
+    """Quote value depending on python
+    """
+    if PY2:
+        if not isinstance(value, basestring):
+            value = str(value)
+        return quote_plus(value.encode("utf-8") if isinstance(value, unicode) else value)
+    else:
+        if not isinstance(value, str):
+            value = str(value)
+        return quote_plus(value)
 
 
 def build_url(args, info):
@@ -92,12 +101,12 @@ def build_url(args, info):
     # step 1 copy new information from info
     for key, value in list(info.items()):
         if value:
-            s = s + "&" + key + "=" + quote_value(value)
+            s = s + "&" + key + "=" + quote_value(value, args.PY2)
 
     # step 2 copy old information from args, but don't append twice
     for key, value in list(args.__dict__.items()):
         if value and key in types and not "&" + str(key) + "=" in s:
-            s = s + "&" + key + "=" + quote_value(value)
+            s = s + "&" + key + "=" + quote_value(value, args.PY2)
 
     return sys.argv[0] + "?" + s[1:]
 
