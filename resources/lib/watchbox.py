@@ -48,7 +48,8 @@ def main():
 
     xbmcplugin.setContent(int(sys.argv[1]), "tvshows")
     check_mode(args)
-    api.close(args)
+    if args._login:
+        api.close(args)
 
 
 def check_mode(args):

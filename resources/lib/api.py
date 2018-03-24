@@ -37,11 +37,10 @@ def start(args):
     """Login and session handler
     """
     # create cookiejar
-    cj = LWPCookieJar()
-    args._cj = cj
+    args._cj = LWPCookieJar()
 
     # lets urllib handle cookies
-    opener = build_opener(HTTPCookieProcessor(cj))
+    opener = build_opener(HTTPCookieProcessor(args._cj))
     opener.addheaders = [("User-Agent",      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"),
                          ("Accept-Encoding", "identity"),
                          ("Accept-Charset",  "utf-8")]
@@ -53,7 +52,7 @@ def start(args):
 
     # load cookies
     try:
-        cj.load(getCookiePath(args), ignore_discard=True)
+        args._cj.load(getCookiePath(args), ignore_discard=True)
 
         # check if session is valid
         html = getPage(args, "https://www.watchbox.de/profil/")
@@ -102,8 +101,9 @@ def getCookies(args):
     """Returns all cookies as string and urlencoded
     """
     ret = ""
-    for cookie in args._cj:
-        ret += urlencode({cookie.name: cookie.value}) + ";"
+    if args._login:
+        for cookie in args._cj:
+            ret += urlencode({cookie.name: cookie.value}) + ";"
 
     return "|User-Agent=Mozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F60.0.3112.113%20Safari%2F537.36&Cookie=" + ret[:-1]
 
