@@ -122,11 +122,11 @@ def genre_view(mode, args):
         # get values
         try:
             meta = item.find("div", {"class": "text_teaser-portrait-meta"}).string.strip()
-            duration, country, year, fsk = meta.split("|")
+            duration, _, year, _ = meta.split("|")
             duration = duration.strip()[:-5]
             duration = str(int(duration) * 60)
             year = year.strip()
-        except (TypeError, ValueError) as e:
+        except (TypeError, ValueError):
             duration = ""
             year = ""
         thumb = item.img["src"].replace(" ", "%20")
@@ -188,9 +188,9 @@ def mylist(args):
         # get values
         try:
             meta = item.find("div", {"class": "text_teaser-portrait-meta"}).string.strip()
-            country, year, fsk = meta.split("|")
+            _, year, _ = meta.split("|")
             year = year.strip()
-        except (TypeError, ValueError) as e:
+        except (TypeError, ValueError):
             year = ""
         thumb = item.img["src"].replace(" ", "%20")
         if thumb[:4] != "http":
