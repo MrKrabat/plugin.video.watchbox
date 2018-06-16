@@ -10,7 +10,6 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <language>de</language>
-        <reuselanguageinvoker>false</reuselanguageinvoker>
         <summary lang="en_GB">Movies and series from the top genres | WATCHBOX</summary>
         <summary lang="de_DE">Filme und Serien aus den Top Genres | WATCHBOX</summary>
         <description lang="en_GB">Whether anime, horror, action or comedy! Browse through our top genres! All films and series for free as online stream at WATCHBOX.</description>
