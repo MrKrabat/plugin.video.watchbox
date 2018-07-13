@@ -387,26 +387,31 @@ def startplayback(args):
     # parse json
     json_obj = json.loads(div["data-player-conf"])
 
-    if "source" in json_obj and "hls" in json_obj["source"]:
+    # Widevine DRM stream
+    if "source" in json_obj and "dash" in json_obj["source"] and "drm" in json_obj["source"]:
         # play stream
         item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path=json_obj["source"]["dash"] + api.getCookies(args))
-        item.setMimeType("application/vnd.apple.mpegurl")
+        item.setMimeType("application/dash+xml")
         item.setContentLookup(False)
 
-        # inputstream adaptive required
+        # inputstream adaptive
         is_helper = inputstreamhelper.Helper("mpd", drm="com.widevine.alpha")
-        if "drm" in json_obj["source"] and is_helper.check_inputstream():
+        if is_helper.check_inputstream():
             item.setProperty("inputstreamaddon", "inputstream.adaptive")
             item.setProperty("inputstream.adaptive.manifest_type", "mpd")
             item.setProperty("inputstream.adaptive.license_type", "com.widevine.alpha")
             item.setProperty("inputstream.adaptive.license_key", "https://widevine.rtl.de/index/proxy|x-auth-token="+ json_obj["source"]["drm"]["userToken"] + "&" + api.getCookies(args)[1:] + "&Content-Type=|R{SSM}|")
             xbmcplugin.setResolvedUrl(int(args._argv[1]), True, item)
-        elif "drm" in json_obj["source"]:
-            # drm requires widevine
+        else:
             xbmc.log("[PLUGIN] %s: Failed to play stream" % args._addonname, xbmc.LOGERROR)
             xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30041))
-        else:
-            xbmcplugin.setResolvedUrl(int(args._argv[1]), True, item)
+    if "source" in json_obj and "hls" in json_obj["source"]:
+        # HLS stream
+        # play stream
+        item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path=json_obj["source"]["hls"] + api.getCookies(args))
+        item.setMimeType("application/vnd.apple.mpegurl")
+        item.setContentLookup(False)
+        xbmcplugin.setResolvedUrl(int(args._argv[1]), True, item)
     else:
         xbmc.log("[PLUGIN] %s: Failed to play stream" % args._addonname, xbmc.LOGERROR)
         xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30041))
