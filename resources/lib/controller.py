@@ -405,7 +405,7 @@ def startplayback(args):
         else:
             xbmc.log("[PLUGIN] %s: Failed to play stream" % args._addonname, xbmc.LOGERROR)
             xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30041))
-    if "source" in json_obj and "hls" in json_obj["source"]:
+    elif "source" in json_obj and "hls" in json_obj["source"]:
         # HLS stream
         # play stream
         item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path=json_obj["source"]["hls"] + api.getCookies(args))
