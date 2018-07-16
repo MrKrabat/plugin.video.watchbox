@@ -1,4 +1,4 @@
-v0.5.0 (2018.07.13)
+v0.5.1 (2018.07.16)
 - Fix Watchbox changed stream info format
 - Added Widevine DRM support
 - Small optimations
